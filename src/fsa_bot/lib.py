@@ -8,11 +8,12 @@ from typing import (
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(
-    filename='discord.log',
-    encoding='utf-8',
-    mode='w'
-)
+handler = logging.StreamHandler()
+# handler = logging.FileHandler(
+#     filename='discord.log',
+#     encoding='utf-8',
+#     mode='w'
+# )
 handler.setFormatter(logging.Formatter(
     '%(asctime)s:%(levelname)s:%(name)s: %(message)s'
 ))
@@ -35,5 +36,15 @@ def csv_string_to_dicts(
             'source': source,
             'target': target
         })
+
+    return output
+
+
+def keyval_to_dict(*args: str) -> Dict[str, str]:
+    output: Dict[str, str] = {}
+
+    for arg in args:
+        key, val = arg.split('=')
+        output[key] = val
 
     return output

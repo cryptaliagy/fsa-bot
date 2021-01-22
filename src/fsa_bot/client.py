@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 
 from dotenv import load_dotenv
+from typing import Dict
 
 import fsa_bot.lib as lib
 
@@ -32,16 +33,89 @@ async def on_ready():
     logger.info(f'Logged in as {bot.user.name}')
 
 
+@bot.event
+async def on_command_error(ctx, error):
+    logger.critical(error)
+
+    ctx.send(error)
+
+
 @bot.command()
 async def state(ctx, csv_str: str, *args: str):
+    valid_args = [
+        'start',
+        'end',
+        'engine'
+    ]
     trans_dicts = lib.csv_string_to_dicts(csv_str)
     transitions = csv.rows_to_transitions(trans_dicts)
 
+    arg_keys = lib.keyval_to_dict(*args)
+
+    passthrough: Dict[str, str] = {}
+
+    for arg in valid_args:
+        if arg in arg_keys:
+            passthrough[arg] = arg_keys[arg]
+
     fsa.get_state_graph(
-        transitions
+        transitions,
+        **passthrough
     )
 
     logger.info(transitions)
+
+    with open('output.png', 'rb') as f:
+        fp = discord.File(f)
+        await ctx.send(file=fp)
+
+
+@bot.command()
+async def string(ctx, *args: str):
+    required_args = [
+        'start',
+        'end',
+        'string'
+    ]
+    valid_args = [
+        *required_args,
+        'engine',
+    ]
+    arg_keys = lib.keyval_to_dict(*args)
+    states = arg_keys.get('states', '')
+
+    trans_dicts = lib.csv_string_to_dicts(states)
+    transitions = csv.rows_to_transitions(trans_dicts)
+
+    passthrough: Dict[str, str] = {}
+
+    for arg in valid_args:
+        if arg in arg_keys:
+            passthrough[arg] = arg_keys[arg]
+
+    for arg in required_args:
+        if arg not in passthrough:
+            await ctx.send(
+                f'Missing required argument "{arg}"'
+            )
+            return
+
+    try:
+        fsa.render_string_graph(
+            transitions=transitions,
+            **passthrough
+        )
+    except Exception as e:
+        logger.critical(e)
+        await ctx.send(
+            'Unable to render the graph, '
+            'reach out to Natalia at '
+            'vellista#3040 to see what went '
+            'wrong.'
+        )
+        return
+    logger.info(transitions)
+    logger.info(passthrough)
 
     with open('output.png', 'rb') as f:
         fp = discord.File(f)
