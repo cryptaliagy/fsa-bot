@@ -9,7 +9,11 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        'pyfsa',
+        'discord.py',
+        'python-dotenv',
+    ],
     tests_require=['pytest-cov', 'mypy', 'pytest', 'flake8'],
     extras_require={
         'tests': ['pytest-cov', 'mypy', 'pytest', 'flake8'],
