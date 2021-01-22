@@ -18,4 +18,7 @@ setup(
     extras_require={
         'tests': ['pytest-cov', 'mypy', 'pytest', 'flake8'],
     },
+    entry_points={
+        'console_scripts': ['fsa-bot = fsa_bot.client:main']
+    }
 )

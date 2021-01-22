@@ -47,5 +47,10 @@ async def state(ctx, csv_str: str, *args: str):
         fp = discord.File(f)
         await ctx.send(file=fp)
 
-if __name__ == '__main__':  # pragma: no cover
+
+def main():
     bot.run(os.environ['DISCORD_TOKEN'])
+
+
+if __name__ == '__main__':  # pragma: no cover
+    main()

@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  fsa-bot:
+    build:
+      context: ..
+      dockerfile: devstack/Dockerfile
+    image: fsa-bot
+    volumes:
+      - "../:/app"
+    # ports:
+    #   - "80:80"
