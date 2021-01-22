@@ -11,8 +11,8 @@ import pyfsa.lib.csv_convert as csv
 
 
 load_dotenv()
-intents = discord.Intents.default()
-intents.members = True
+intents = discord.Intents()
+intents.guild_messages = True
 
 bot = commands.Bot(
     command_prefix='$',
@@ -32,7 +32,7 @@ async def on_ready():
     logger.info(f'Logged in as {bot.user.name}')
 
 
-@bot.command
+@bot.command()
 async def state(ctx, csv_str: str, *args: str):
     trans_dicts = lib.csv_string_to_dicts(csv_str)
     transitions = csv.rows_to_transitions(trans_dicts)
@@ -41,7 +41,11 @@ async def state(ctx, csv_str: str, *args: str):
         transitions
     )
 
-    ctx.send(file='output.png')
+    logger.info(transitions)
+
+    with open('output.png', 'rb') as f:
+        fp = discord.File(f)
+        await ctx.send(file=fp)
 
 if __name__ == '__main__':  # pragma: no cover
     bot.run(os.environ['DISCORD_TOKEN'])
