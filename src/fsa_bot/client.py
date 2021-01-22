@@ -23,6 +23,7 @@ bot = commands.Bot(
     bot, and http://tlia.ca/fsa for the engine
     that powers it
     ''',
+    help_command=None,
     intents=intents
 )
 logger = lib.logger
@@ -120,6 +121,23 @@ async def string(ctx, *args: str):
     with open('output.png', 'rb') as f:
         fp = discord.File(f)
         await ctx.send(file=fp)
+
+
+@bot.command()
+async def help(ctx, *_: str):
+    await ctx.send(
+        '''
+Welcome to the finite state automata bot!
+
+Check out the readme for this project at
+http://tlia.ca/fsa-bot which will go
+through examples and uses of this bot.
+
+This bot uses the PyFSA library as a backend,
+so you can find more information on
+http://tlia.ca/fsa
+        '''
+    )
 
 
 def main():
