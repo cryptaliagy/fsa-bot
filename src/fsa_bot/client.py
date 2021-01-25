@@ -72,7 +72,8 @@ async def state(ctx, csv_str: str, *args: str):
         await ctx.send(file=fp)
 
 
-@bot.command()
+# Disabled while PyFSA does not allow use of the `string` command
+# @bot.command()
 async def string(ctx, *args: str):
     required_args = [
         'start',

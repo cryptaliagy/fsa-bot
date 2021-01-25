@@ -11,7 +11,7 @@ setup(
     package_dir={'': 'src'},
     include_package_data=True,
     install_requires=[
-        'pyfsa>=0.3.2',
+        'pyfsa>=0.4',
         'discord.py',
         'python-dotenv',
     ],

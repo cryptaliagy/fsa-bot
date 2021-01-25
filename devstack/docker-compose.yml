@@ -8,5 +8,7 @@ services:
     image: fsa-bot
     volumes:
       - "../:/app"
+    env_file:
+      - ../.env
     # ports:
     #   - "80:80"

@@ -22,7 +22,7 @@ $state "a,x,y b,x,z a,y,x b,y,z b,y,z a,z,z b,z,z" start=x end=z engine=dot
 
 Keep in mind, if you need to separate data by spaces, you'll need to wrap the whole term in quotation marks.
 
-
+<!-- Commented out as it is not currently usable
 This bot also supports rendering walk-throughs of state graphs with specific strings. For those, you'll need to specify the start state, the end state, and the string, as well as the state transitions. Here's an example:
 
 ```
@@ -30,3 +30,4 @@ $string "states=a,x,y b,x,z a,y,x b,y,z b,y,z a,z,z b,z,z" start=x end=z string=
 ```
 
 If the string is valid in that state machine, the final node of the resulting graph will be green.
+-->
