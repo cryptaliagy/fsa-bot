@@ -10,6 +10,6 @@ COPY . /app
 
 COPY ./.env /app
 
-RUN python3 -m pip install -e .
+RUN python3 -m pip install .
 
 CMD ["fsa-bot"]

@@ -6,8 +6,8 @@ services:
       context: ..
       dockerfile: devstack/Dockerfile
     image: fsa-bot
-    volumes:
-      - "../:/app"
+    # volumes:
+    #   - "../:/app"
     env_file:
       - ../.env
     # ports:
