@@ -62,7 +62,7 @@ async def state(ctx, csv_str: str, *args: str):
 
     fsa.get_state_graph(
         transitions,
-        **passthrough
+        **passthrough  # type: ignore
     )
 
     logger.info(transitions)
@@ -106,7 +106,7 @@ async def string(ctx, *args: str):
     try:
         fsa.render_string_graph(
             transitions=transitions,
-            **passthrough
+            **passthrough  # type: ignore
         )
     except Exception as e:
         logger.critical(e)
